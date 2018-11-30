@@ -21,5 +21,23 @@ describe('customer csv generation', () => {
         expect(stream.writable).isTrue
         done()
     })
+
+    // test if what I have to test with is correct
+    it('should parse csv string', done => {
+        parse(content.trim(), {columns: true}, (err, records) => {
+            const [customer] = records
+            expect(customer.firstName).to.be('John')
+            expect(customer.lastName).to.be('Smith')
+            done()
+        })
+    })
+
+    it('should generate a customer string', () => {
+        const customer = createCustomer()
+        expect("customerId" in customer).isTrue
+    })
+
+
+
 })
 
