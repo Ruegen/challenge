@@ -39,8 +39,14 @@ describe('customer csv generation', () => {
 
     it('should generate a customer string', () => {
         const customer = createCustomer()
-        expect("customerId" in customer).isTrue
+        expect(customer.match(/,/g).length).to.be(2)
+        expect(customer[customer.length -1]).to.be('\n')
     })
+
+    
+
+
+
 
 
 
