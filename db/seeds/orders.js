@@ -61,3 +61,5 @@ const seedOrders = (stream) => new Promise((resolve, reject) => {
             reject(err)
         })
 })
+
+module.exports = seedOrders
