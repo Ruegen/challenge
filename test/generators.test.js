@@ -5,7 +5,8 @@ const parse = require('csv-parse')
 
 // functions
 const {
-    createCustomer
+    createCustomer,
+    generateCustomers
 } = require('../lib/csv')
 
 let content, stream;
@@ -20,6 +21,7 @@ describe('customer csv generation', () => {
             'customers.csv': '',
         })
         stream = fs.createWriteStream('customers.csv')
+        readStream = fs.createReadStream('customers.csv')
     })
 
     it('should be a stream object', done => {
@@ -43,11 +45,31 @@ describe('customer csv generation', () => {
         expect(customer[customer.length -1]).to.be('\n')
     })
 
-    
+    it('should be a write stream', () => {
+        expect(readStream.readable).isTrue
+    })
 
+    it('should generate n customers', done => {
+        const output = []
+        generateCustomers(stream, 2, () => {
+            
+            readStream.pipe(parse({columns: true}))
+            
+            .on('readable', function() {
+                let record
+                while (record = this.read()) {
+                    output.push(record)
+                }
+            })
 
-
-
+            .on('end', () => {
+                expect(output.length).to.be(2)
+                expect("_id" in output[0]).isTrue
+                done()
+            })
+        })
+        
+    })
 
 
 })
