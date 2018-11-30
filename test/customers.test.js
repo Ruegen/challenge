@@ -11,7 +11,7 @@ const {
 
 let content, stream;
 
-content = 'customerId,firstName,lastName\n'
+content = '_id,firstName,lastName\n'
     + '5bfde45518acb93c34570da7,John,Smith'
 
 // return a csv ordered string
