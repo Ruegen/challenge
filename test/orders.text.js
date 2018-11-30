@@ -32,8 +32,8 @@ describe('customer csv generation', () => {
 
     it('create an csv order', done => {
         const order = createOrder('xyz')
-        expect(customer.match(/,/g).length).to.be(3)
-        expect(customer[customer.length -1]).to.be('\n')
+        expect(order.match(/,/g).length).to.be(3)
+        expect(order[order.length -1]).to.be('\n')
     })
 
 })
