@@ -9,6 +9,7 @@ const {
 } = require('./lib/csv')
 
 const seedCustomers = require('./db/seeds/customers')
+const seedOrders = require('./db/seeds/orders')
 
 async function main() {
         const customersCSVPath = path.join(dir, 'customers.csv')
@@ -21,11 +22,18 @@ async function main() {
         const orders = fs.createWriteStream(ordersCSVPath)
         await generateOrders(customersStream, orders)
 
-        const message = await seedCustomers()
 
-        console.log(message)
-
+        // haven't mocked this for testing
+        console.log(await seedCustomers())
+       
+        // at this point you should have uploaded the csv file to a host to fetch
+        const url = 'https://raw.githubusercontent.com/Ruegen/orders/master/orders.csv'
+        const stream = fs.createReadStream(ordersCSVPath)
+        //request(url) 
         
+
+        console.log(await seedOrders(stream))
+
 
 }
 

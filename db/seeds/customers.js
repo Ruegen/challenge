@@ -48,7 +48,7 @@ dbConnect("customers")
                 Customer.insertOne(customer)
                 .then((record) => {
                     if(record) {
-                        console.log('added customer', record)
+                        // console.log('added customer', record)
                     }
                     customersStream.resume()
                     cb(null, customer)
