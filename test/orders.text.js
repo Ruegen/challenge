@@ -4,8 +4,7 @@ const expect = require('expect.js')
 const parse = require('csv-parse')
 
 const {
-    createCustomer,
-    generateCustomers
+    createOrder
 } = require('../lib/csv')
 
 let content, stream;
@@ -29,6 +28,12 @@ describe('customer csv generation', () => {
 
     it('should be a stream object', () => {
         expect(readStream.readable).isTrue
+    })
+
+    it('create an csv order', done => {
+        const order = createOrder('xyz')
+        expect(customer.match(/,/g).length).to.be(3)
+        expect(customer[customer.length -1]).to.be('\n')
     })
 
 })
