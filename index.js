@@ -3,6 +3,7 @@ const fs = require('fs')
 const parse = require('csv-parse')
 const ObjectId = require('mongodb').ObjectID
 const dir = path.join(process.cwd(), 'csv')
+const request = require('request')
 const {
     generateCustomers,
     generateOrders,
@@ -24,16 +25,16 @@ async function main() {
 
 
         // haven't mocked this for testing
-        const steamread = fs.createReadStream(customersCSVPath)
-        console.log(await seedCustomers(steamread))
+        const customersRead = fs.createReadStream(customersCSVPath)
+        console.log(await seedCustomers(customersRead))
        
         // at this point you should have uploaded the csv file to a host to fetch
+        // if you don't want to upload, use the local file generated csv
         const url = 'https://raw.githubusercontent.com/Ruegen/orders/master/orders.csv'
-        const stream = fs.createReadStream(ordersCSVPath)
-        //request(url) 
+        const stream = fs.createReadStream(ordersCSVPath) /*request(url)*/
         
 
-        // console.log(await seedOrders(stream))
+        console.log(await seedOrders(stream))
 
 
 }
