@@ -35,7 +35,7 @@ Files generated and received should be as a stream
 * csv files and the other for seeding csv files into the db
 * Timed this, if the csv files were already generated then this would be less than 90 minutes
 * Enjoyed creating this (obsessively) and I had to learn a few things
-* Realized event-stream module had a security risk once but it's safe to say that is gone
+* <span style="color:red;">Realized event-stream module had a security risk once but it's safe to say that is gone</span>, happy to explain
 * Tested this with large file sets
 * I know I could have found a tool to generate csv files but I wanted to reuse functions
 * I'd have testing on the db (mocks)
