@@ -49,24 +49,22 @@ describe('customer csv generation', () => {
         expect(readStream.readable).isTrue
     })
 
-    it('should generate n customers', done => {
+    it('should generate n customers', async () => {
         const output = []
-        generateCustomers(stream, 2, () => {
+        await generateCustomers(stream, 2)
             
-            readStream.pipe(parse({columns: true}))
+        readStream.pipe(parse({columns: true}))
             
-            .on('readable', function() {
+        .on('readable', function() {
                 let record
                 while (record = this.read()) {
                     output.push(record)
                 }
-            })
+        })
 
-            .on('end', () => {
-                expect(output.length).to.be(2)
-                expect("_id" in output[0]).isTrue
-                done()
-            })
+        .on('end', () => {
+            expect(output.length).to.be(2)
+            expect("_id" in output[0]).isTrue
         })
         
     })

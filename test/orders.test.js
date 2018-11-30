@@ -56,22 +56,22 @@ describe('customer csv generation', () => {
         await generateCustomers(customerStream, 2)
         const read = fs.createReadStream('customers.csv')
         
-        generateOrders(read, stream, () => {
-            const orders = fs.createReadStream('orders.csv')
+        await generateOrders(read, stream)
+        const orders = fs.createReadStream('orders.csv')
 
-            orders.pipe(parse({columns: true}))
-            .on('readable', function() {
-                    let record
-                    while (record = this.read()) {
-                        output.push(record)
-                    }
-                })
-            .on('end', () => {
-                    expect(output.length).to.be(2)
-                    expect("_id" in output[0]).isTrue
-                    expect("item" in output[0]).isTrue
+        orders.pipe(parse({columns: true}))
+        .on('readable', function() {
+                let record
+                while (record = this.read()) {
+                    output.push(record)
+                }
             })
+        .on('end', () => {
+                expect(output.length).to.be(2)
+                expect("_id" in output[0]).isTrue
+                expect("item" in output[0]).isTrue
         })
+        
             
     })
 
