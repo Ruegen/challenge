@@ -7,22 +7,20 @@ const parse = require('csv-parse')
 const dbConnect = require('../connection')
 
 
-const seedCustomers = () => new Promise((resolve, reject) => {
+const seedCustomers = (customersStream) => new Promise((resolve, reject) => {
     
-const customersStream = fs.createReadStream(path.join(dir, 'customers.csv'))
-
 dbConnect("customers")
     .then(({db, collection: Customer, client}) => {
-        customersStream.on('end', () => {
-            client.close()
-            resolve('seed completed')
-        })
+        
+
+        // customersStream.on('finish', () => client.close())
         
         // parse csv
         customersStream
         .pipe(parse({columns: true, header: false}))
 
         .pipe(es.map((customer, cb) => {
+            // console.log(customer)
             cb(null, {...customer, _id: new ObjectId(customer._id) })
         }))
 
@@ -31,13 +29,13 @@ dbConnect("customers")
             customersStream.pause()
             Customer.findOne({_id: customer._id})
                 .then(record => {
-                    
-                    if(record) {
-                        customersStream.resume()
-                        cb()
-                    } else {
+                    // console.log(record)
+                    if(!record) {
                         customersStream.resume()
                         cb(null, customer)
+                    } else {
+                        customersStream.resume()
+                        cb()
                     }
                 })
                 .catch(err => reject(err))
@@ -53,8 +51,15 @@ dbConnect("customers")
                     customersStream.resume()
                     cb(null, customer)
                 })
-                .catch(err => reject(err))
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
         }))
+        .on('end', () => {
+            client.close()
+            resolve('customer seed completed')
+        })
     })
     .then(() => console.log('db connection'))
     .catch(err => {

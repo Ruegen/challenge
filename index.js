@@ -16,7 +16,7 @@ async function main() {
         const ordersCSVPath = path.join(dir, 'orders.csv')
         
         const customers = fs.createWriteStream(customersCSVPath)
-        await generateCustomers(customers, 2)
+        await generateCustomers(customers, 10)
         
         const customersStream = fs.createReadStream(customersCSVPath)
         const orders = fs.createWriteStream(ordersCSVPath)
@@ -24,7 +24,8 @@ async function main() {
 
 
         // haven't mocked this for testing
-        console.log(await seedCustomers())
+        const steamread = fs.createReadStream(customersCSVPath)
+        console.log(await seedCustomers(steamread))
        
         // at this point you should have uploaded the csv file to a host to fetch
         const url = 'https://raw.githubusercontent.com/Ruegen/orders/master/orders.csv'
@@ -32,7 +33,7 @@ async function main() {
         //request(url) 
         
 
-        console.log(await seedOrders(stream))
+        // console.log(await seedOrders(stream))
 
 
 }

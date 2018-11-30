@@ -12,19 +12,31 @@ Setup
 
 Files generated and received should be as a stream
 
-# streaming libraries
+## streaming libraries
     - request (http)
     - event-stream
     - csv-parse
     - fs
   
-# name and item generation
+## name and item generation
     - faker
 
-# testing
+## testing
     - mocha (jest seemed to be giving me unknown issues)
     - mock-fs (test fs)
     - expect.js
 
-# database
+## database
     - mongodb
+
+
+# Outcome
+* This took me longer than 90 minutes, I would break this up into 2 parts, one for generating 
+* csv files and the other for seeding csv files into the db
+* Timed this, if the csv files were already generated then this would be less than 90 minutes
+* Enjoyed creating this (obsessively) and I had to learn a few things
+* Realized event-stream module had a security risk once but it's safe to say that is gone
+* Tested this with large file sets
+* I know I could have found a tool to generate csv files but I wanted to reuse functions
+* I'd have testing on the db (mocks)
+* I spent a great deal of time on research (tools) but out of my own desire

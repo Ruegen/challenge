@@ -71,7 +71,6 @@ describe('customer csv generation', () => {
                 expect("_id" in output[0]).isTrue
                 expect("item" in output[0]).isTrue
         })
-        
             
     })
 

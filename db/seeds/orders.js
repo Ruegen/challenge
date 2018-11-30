@@ -10,11 +10,8 @@ const dir = path.join(process.cwd(), 'csv')
 const seedOrders = (stream) => new Promise((resolve, reject) => {
     dbConnect("orders")
         .then(({db, collection: Order, client}) => {
-           
-            stream.on('end', () => {
-                client.close()
-                resolve('orders seeded')
-            })
+
+            stream.on('error', err => reject(err))
             
             stream
             .pipe(parse({columns: true, header: false}))
@@ -55,6 +52,10 @@ const seedOrders = (stream) => new Promise((resolve, reject) => {
                 })
                 .catch(err => cb(err))
             }))
+            .on('end', () => {
+                client.close()
+                resolve('orders seed completed')
+            })
         })
         .then(() => console.info('db connection'))
         .catch(err => {
