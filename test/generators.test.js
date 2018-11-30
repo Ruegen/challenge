@@ -3,6 +3,11 @@ const mockfs = require('mock-fs')
 const expect = require('expect.js')
 const parse = require('csv-parse')
 
+// functions
+const {
+    createCustomer
+} = require('../lib/csv')
+
 let content, stream;
 
 content = 'customerId,firstName,lastName\n'
